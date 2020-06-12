@@ -87,14 +87,35 @@ while True:
         if(len(choice.split()) > 1):
             command = choice.split()
             action = command[0]
-            item = command[1]
+            item_name = command[1]
+            item = {}
+            drop_item = {}
 
-            #if(action == 'take'):
+            for i in player.current_room.items:
+                if (i.name == item_name):
+                    item = i
 
-                
-    # print(f"{RED} This item is not in this room.{ENDC}")
+            if(action == 'take'):
+                if item in player.current_room.items:
+                    player.current_room.items.remove(item)
+                    player.inventory.append(item)
+                    item.on_take()
+                else: 
+                    print(f"{RED} This item is not in this room.{ENDC}")
 
-            print(f"{action}, {item}")
+            for i in player.inventory:
+                if (i.name == item_name):
+                    drop_item = i
+
+            if(action == 'drop'):
+                if drop_item in player.inventory:
+                    player.inventory.remove(drop_item)
+                    player.current_room.items.append(drop_item)   
+                    drop_item.on_drop()
+                else:
+                    print(f"{RED} This item is not in your inventory.{ENDC}")
+
+            
         else:
             if(choice == 'q'):
                 break

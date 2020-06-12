@@ -7,7 +7,8 @@ class Item:
         return output
     def on_take(self):
         print(f"You have picked up {self.name}")
-
+    def on_drop(self):
+         print(f"You have droped {self.name}")
 
 class Potion(Item):
     def __init__(self, name, description, effect):
